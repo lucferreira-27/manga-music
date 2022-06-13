@@ -1,9 +1,16 @@
-const express = require("express")
+import express from "express";
 const router = express.Router({ mergeParams: true })
+import mangas from "../src/controllers/mangaController.js";
 
 
 router.get("/", (req, res) => {
-    res.send("mangas")
+    mangas.findAll().then(mangas => {
+        res.statusCode = 200
+        res.send(mangas)
+    }).catch(err => {
+        res.statusCode = 500
+        res.send(err)
+    })
 })
 
 router.get("/:id", (req, res) => {
@@ -28,4 +35,4 @@ router.delete("/:id", (req, res) => {
 
 
 
-module.exports = router
+export default router
